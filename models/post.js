@@ -50,6 +50,7 @@ postSchema.statics.findOneByPostId = function (_id) {
 };
 
 postSchema.statics.updateByPostId = function (_id, payload) {
+  // { new: true }: return the modified document rather than the original. defaults to false
     return this.findOneAndUpdate({_id}, payload, { new: true });
 };
 
