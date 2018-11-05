@@ -31,8 +31,30 @@ var postSchema = mongoose.Schema({
     type: String,
     required: true
   }
+},{ timestamp: true }
+);
 
-});
+postSchema.statics.create = function (payload) {
+  // this === Model
+  const todo = new this(payload);
+  // return promise
+  return todo.save();
+};
 
-var Post = mongoose.model('post', postSchema);
-export default Post;
+postSchema.statics.findAll = function () {
+    return this.find({});
+};
+
+postSchema.statics.findOneByPostId = function (_id) {
+    return this.find({_id});
+};
+
+postSchema.statics.updateByPostId = function (_id, payload) {
+    return this.findOneAndUpdate({_id}, payload, { new: true });
+};
+
+postSchema.statics.deleteByPostId = function (_id) {
+    return this.remove({ _id });
+};
+
+export default () => mongoose.model('Post', postSchema);
