@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
-import tagSchema from 'tag'
-import postSchema from 'post'
+import userSchema from 'tag'
+import userSchema from 'post'
 
 var userSchema = mongoose.Schema({
   userid: {
@@ -8,7 +8,7 @@ var userSchema = mongoose.Schema({
     required: true
   },
 
-  passwd: {
+  password: {
     type: String,
     required: true
   },
@@ -18,12 +18,12 @@ var userSchema = mongoose.Schema({
   },
 
   tags: [{
-    type: tagSchema,
+    type: userSchema,
     required: true
   }],
 
   posts: [{
-    type: postSchema,
+    type: userSchema,
   }],
 
   username: {
@@ -31,7 +31,29 @@ var userSchema = mongoose.Schema({
     required: true
   }
 });
+userSchema.statics.create = function (payload) {
+  // this === Model
+  const user = new this(payload);
+  // return promise
+  return user.save();
+};
 
+userSchema.statics.findAll = function () {
+    return this.find({});
+};
 
-module.exports = mongoose.model('Post', postSchema);
+userSchema.statics.findOneByUserId = function (_id) {
+    return this.find({_id});
+};
+
+userSchema.statics.updateByUserId = function (_id, payload) {
+  // { new: true }: return the modified document rather than the original. defaults to false
+    return this.findOneAndUpdate({_id}, payload, { new: true });
+};
+
+userSchema.statics.deleteByUserId = function (_id) {
+    return this.remove({ _id });
+};
+
+module.exports = mongoose.model('User', userSchema);
 
