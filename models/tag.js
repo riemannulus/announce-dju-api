@@ -21,4 +21,18 @@ tagSchema.statics.create = function (payload) {
 tagSchema.statics.findAll = function () {
     return this.find({});
 };
+
+tagSchema.statics.findOneByTagId = function (_id) {
+    return this.find({_id});
+};
+
+tagSchema.statics.updateByTagId = function (_id, payload) {
+  // { new: true }: return the modified document rather than the original. defaults to false
+    return this.findOneAndUpdate({_id}, payload, { new: true });
+};
+
+tagSchema.statics.deleteByTagId = function (_id) {
+    return this.remove({ _id });
+};
+
 module.exports = tagSchema;
