@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
-import tagSchema from 'tag'
+const mongoose = require('mongoose');
+var tag = require('./tag');
 
 var postSchema = mongoose.Schema({
   title: {
@@ -18,7 +18,7 @@ var postSchema = mongoose.Schema({
   },
 
   tags: [{
-    type: tagSchema,
+    type: tag,
     required: true
   }],
 
@@ -58,4 +58,4 @@ postSchema.statics.deleteByPostId = function (_id) {
     return this.remove({ _id });
 };
 
-export default () => mongoose.model('Post', postSchema);
+module.exports = mongoose.model('Post', postSchema);

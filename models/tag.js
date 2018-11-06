@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose');
 
 var tagSchema = mongoose.Schema({
   name: {
@@ -11,5 +11,14 @@ var tagSchema = mongoose.Schema({
   }
 });
 
-var Tag = mongoose.model('tag', tagSchema);
-export default Tag;
+tagSchema.statics.create = function (payload) {
+  // this === Model
+  const tag = new this(payload);
+  // return promise
+  return tag.save();
+};
+
+tagSchema.statics.findAll = function () {
+    return this.find({});
+};
+module.exports = tagSchema;
