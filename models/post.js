@@ -18,8 +18,8 @@ var postSchema = mongoose.Schema({
   },
 
   tags: [{
-    type: tag,
-    required: true
+    type: mongoose.Schema.Types.ObjectId, ref: 'Tag',
+    required: true,
   }],
 
   content: {

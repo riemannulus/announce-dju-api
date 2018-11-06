@@ -3,39 +3,40 @@ import userSchema from 'tag'
 import userSchema from 'post'
 
 var userSchema = mongoose.Schema({
-  userid: {
-    type: String,
-    required: true
-  },
+    userid: {
+        type: String,
+        required: true
+    },
 
-  password: {
-    type: String,
-    required: true
-  },
+    password: {
+        type: String,
+        required: true
+    },
 
-  email: {
-    type: String,
-  },
+    email: {
+        type: String,
+    },
 
-  tags: [{
-    type: userSchema,
-    required: true
-  }],
+    tags: [{
+        type: mongoose.Schema.Types.ObjectId, ref: 'Tag',
+        required: true
+    }],
 
-  posts: [{
-    type: userSchema,
-  }],
+    posts: [{
+        type: mongoose.Schema.Types.ObjectId, ref: 'Post',
+        type: userSchema,
+    }],
 
-  username: {
-    type: String,
-    required: true
-  }
+    username: {
+        type: String,
+        required: true
+    }
 });
 userSchema.statics.create = function (payload) {
-  // this === Model
-  const user = new this(payload);
-  // return promise
-  return user.save();
+    // this === Model
+    const user = new this(payload);
+    // return promise
+    return user.save();
 };
 
 userSchema.statics.findAll = function () {
@@ -47,7 +48,7 @@ userSchema.statics.findOneByUserId = function (_id) {
 };
 
 userSchema.statics.updateByUserId = function (_id, payload) {
-  // { new: true }: return the modified document rather than the original. defaults to false
+    // { new: true }: return the modified document rather than the original. defaults to false
     return this.findOneAndUpdate({_id}, payload, { new: true });
 };
 
