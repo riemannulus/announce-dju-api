@@ -10,6 +10,15 @@ router.get('/', (req, res) => {
         .catch(err => res.status(500).send(err));
 });
 
+router.get('/:postid', (req, res) => {
+    console.log(req.param.postid);
+    Post.findOneByPostId(req.params.postid)
+        .then((posts) => {
+            res.send(posts);
+        })
+        .catch(err => res.status(500).send(err));
+});
+
 router.post('/', (req, res) => {
     Post.create(req.body)
         .then(post => res.send({status: "200 OK"}))
