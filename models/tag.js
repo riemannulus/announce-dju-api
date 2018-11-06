@@ -23,12 +23,16 @@ tagSchema.statics.findAll = function () {
 };
 
 tagSchema.statics.findOneByTagId = function (_id) {
-    return this.find({_id});
+    return this.find({_id: _id});
 };
+
+tagSchema.statics.findOneByTagName = function(name) {
+    return this.find({name: name});
+}
 
 tagSchema.statics.updateByTagId = function (_id, payload) {
   // { new: true }: return the modified document rather than the original. defaults to false
-    return this.findOneAndUpdate({_id}, payload, { new: true });
+    return this.findOneAndUpdate({_id: _id}, payload, { new: true });
 };
 
 tagSchema.statics.deleteByTagId = function (_id) {
