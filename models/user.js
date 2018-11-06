@@ -32,6 +32,6 @@ var userSchema = mongoose.Schema({
   }
 });
 
-var User = mongoose.model('user', userSchema);
-export default User;
+
+module.exports = mongoose.model('Post', postSchema);
 
